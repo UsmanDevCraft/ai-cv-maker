@@ -31,3 +31,9 @@ export interface CoverLetterDocumentProps {
   cv: TailoredCV;
   coverLetterText: string;
 }
+
+export interface PDFPreviewPanelProps {
+  cv: TailoredCV;
+  coverLetterText: string;
+  activePreviewTab: "cv" | "cl";
+}

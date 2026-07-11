@@ -1,11 +1,10 @@
-import LandingPage from "@/src/view/LandingPage";
+import dynamic from "next/dynamic";
+import LoadingScreen from "@/src/components/LoadingScreen";
 
-const page = () => {
-  return (
-    <div>
-      <LandingPage />
-    </div>
-  );
-};
+const LandingPage = dynamic(() => import("@/src/view/LandingPage"), {
+  loading: () => <LoadingScreen />,
+});
 
-export default page;
+export default function Page() {
+  return <LandingPage />;
+}

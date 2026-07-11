@@ -18,7 +18,10 @@ import {
   ChevronDown,
 } from "lucide-react";
 import Link from "next/link";
-import { FinalTailoredOutput, TailoredCV } from "../../types/cv_template";
+import {
+  FinalTailoredOutput,
+  PDFPreviewPanelProps,
+} from "../../types/cv_template";
 import { CVDocument } from "../../components/CvDocument";
 import { CoverLetterDocument } from "../../components/CoverLetterDocument";
 
@@ -104,13 +107,6 @@ const LoadingScreen = () => {
   );
 };
 
-// Client-side PDF dynamic previewer to prevent SSR errors
-interface PDFPreviewPanelProps {
-  cv: TailoredCV;
-  coverLetterText: string;
-  activePreviewTab: "cv" | "cl";
-}
-
 const PDFPreviewPanel = ({
   cv,
   coverLetterText,
@@ -189,17 +185,11 @@ export default function CvCreationPage() {
   const [result, setResult] = useState<FinalTailoredOutput | null>(null);
 
   // UI state hooks
-  const [isMounted, setIsMounted] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [copied, setCopied] = useState(false);
   const [downloadDropdownOpen, setDownloadDropdownOpen] = useState(false);
   const [activeReviewTab, setActiveReviewTab] = useState<"cv" | "cl">("cv");
   const [activePreviewTab, setActivePreviewTab] = useState<"cv" | "cl">("cv");
-
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsMounted(true);
-  }, []);
 
   const handleReviewTabChange = (tab: "cv" | "cl") => {
     setActiveReviewTab(tab);
@@ -387,28 +377,6 @@ export default function CvCreationPage() {
       setLoading(false);
     }
   };
-
-  if (!isMounted) {
-    return (
-      <div className="relative min-h-screen bg-cornsilk font-sans text-slate-800 antialiased">
-        <header className="sticky top-0 z-50 w-full border-b border-white/30 bg-white/20 backdrop-blur-lg">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-8">
-            <div className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-light-bronze text-white shadow-md">
-                <Sparkles className="h-5 w-5" />
-              </div>
-              <span className="text-xl font-extrabold tracking-tight text-slate-900">
-                Tailor<span className="text-light-bronze font-black">CV</span>
-              </span>
-            </div>
-          </div>
-        </header>
-        <div className="max-w-7xl mx-auto px-6 py-12 text-center text-slate-500">
-          Loading workspace components...
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-cornsilk font-sans text-slate-800 antialiased selection:bg-tea-green pb-16">
