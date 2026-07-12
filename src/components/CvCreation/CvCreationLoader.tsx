@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Sparkles, Check } from "lucide-react";
-import { cvCreationSteps } from "../constants/loadingScreen";
+import { cvCreationSteps } from "../../constants/loadingScreen";
 
 const CvCreationLoader = () => {
   const [currentStep, setCurrentStep] = useState(0);

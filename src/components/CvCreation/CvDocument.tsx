@@ -1,5 +1,5 @@
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
-import { TailoredCV } from "../types/cv_template";
+import { TailoredCV } from "../../types/cv_template";
 
 // Create high-quality, professional document styles
 const styles = StyleSheet.create({
