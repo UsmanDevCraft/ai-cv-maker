@@ -24,6 +24,8 @@ import {
 } from "../../types/cv_template";
 import { CVDocument } from "../../components/CvDocument";
 import { CoverLetterDocument } from "../../components/CoverLetterDocument";
+import CvCreationLoader from "@/src/components/CvCreationLoader";
+import { formatFileSize } from "@/src/lib/helper";
 
 // Organic floating background blobs matching landing page
 const FloatingBlobs = () => (
@@ -33,79 +35,6 @@ const FloatingBlobs = () => (
     <div className="absolute bottom-[20%] left-[15%] w-[40rem] h-[40rem] rounded-full bg-beige/30 blur-[130px] animate-pulse duration-[12000ms]" />
   </div>
 );
-
-// Progress loading state with step-by-step scanner checking
-const LoadingScreen = () => {
-  const steps = [
-    "Reading uploaded CV file...",
-    "Extracting experience and skills...",
-    "Analyzing target job requirements...",
-    "Rewriting bullet points (X-Y-Z formula)...",
-    "Generating cover letter context...",
-    "Compiling tailored PDF and assets...",
-  ];
-  const [currentStep, setCurrentStep] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentStep((prev) => (prev < steps.length - 1 ? prev + 1 : prev));
-    }, 1500);
-    return () => clearInterval(interval);
-  }, [steps.length]);
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      className="max-w-xl mx-auto border border-white/50 bg-white/30 backdrop-blur-md rounded-3xl p-8 shadow-2xl text-center space-y-6"
-    >
-      <div className="relative w-24 h-24 mx-auto bg-light-bronze/10 rounded-full flex items-center justify-center">
-        <div className="absolute inset-0 rounded-full border-2 border-light-bronze border-t-transparent animate-spin" />
-        <Sparkles className="h-10 w-10 text-light-bronze animate-pulse" />
-      </div>
-
-      <div className="space-y-2">
-        <h3 className="text-xl font-bold text-slate-900">
-          Tailoring Your Assets
-        </h3>
-        <p className="text-sm text-slate-500">
-          Please wait. Our AI is optimizing your profile for the target role.
-        </p>
-      </div>
-
-      <div className="text-left space-y-3 bg-white/50 rounded-2xl p-6 border border-white/30">
-        {steps.map((step, idx) => (
-          <div
-            key={idx}
-            className="flex items-center gap-3 text-xs font-semibold"
-          >
-            {idx < currentStep ? (
-              <div className="h-5 w-5 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
-                <Check className="h-3 w-3" />
-              </div>
-            ) : idx === currentStep ? (
-              <div className="h-5 w-5 rounded-full border-2 border-light-bronze border-t-transparent animate-spin" />
-            ) : (
-              <div className="h-5 w-5 rounded-full bg-slate-100 border border-slate-200" />
-            )}
-            <span
-              className={
-                idx === currentStep
-                  ? "text-slate-900 font-bold"
-                  : idx < currentStep
-                    ? "text-slate-500 line-through"
-                    : "text-slate-400"
-              }
-            >
-              {step}
-            </span>
-          </div>
-        ))}
-      </div>
-    </motion.div>
-  );
-};
 
 const PDFPreviewPanel = ({
   cv,
@@ -341,14 +270,6 @@ export default function CvCreationPage() {
     URL.revokeObjectURL(url);
   };
 
-  const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return "0 Bytes";
-    const k = 1024;
-    const sizes = ["Bytes", "KB", "MB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!file || !jobDesc)
@@ -419,7 +340,7 @@ export default function CvCreationPage() {
               exit={{ opacity: 0 }}
               className="py-12"
             >
-              <LoadingScreen />
+              <CvCreationLoader />
             </motion.div>
           ) : !result ? (
             <motion.div
