@@ -37,7 +37,7 @@ CVForbes allows users to:
 * Improve keyword alignment
 * Export professional application assets
 
-The entire workflow is designed to reduce the time spent tailoring applications from **30–60 minutes to under 10 seconds**.
+The entire workflow is designed to reduce the time spent tailoring applications from **30–60 minutes to under seconds**.
 
 ---
 

@@ -143,7 +143,7 @@ export default function LandingPage() {
               <span className="relative inline-block text-light-bronze">
                 Tailor Your CV
               </span>{" "}
-              in 10 Seconds.
+              in Seconds.
             </motion.h1>
 
             {/* Subheadline */}
