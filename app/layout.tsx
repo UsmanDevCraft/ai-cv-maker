@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "TailorCV - Land the Interview. Tailor Your CV in 10 Seconds.",
+  title: "CVForbes - Land the Interview. Tailor Your CV in Seconds.",
   description:
     "Instantly adjust your professional experience to match any company's job requirements using advanced AI. High-impact bullet points, custom cover letters, and zero hassle.",
 };

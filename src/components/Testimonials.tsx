@@ -176,7 +176,7 @@ export default function Testimonials() {
           Loved by Professionals Worldwide
         </p>
         <p className="mx-auto mt-4 max-w-xl text-slate-600">
-          Thousands of job seekers trust TailorCV to craft high-impact
+          Thousands of job seekers trust CVForbes to craft high-impact
           applications. Here&apos;s what they have to say.
         </p>
       </div>

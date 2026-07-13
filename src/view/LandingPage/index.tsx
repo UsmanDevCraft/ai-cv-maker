@@ -47,6 +47,10 @@ export default function LandingPage() {
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
+      if (typeof window !== "undefined" && window.innerWidth < 1024) {
+        return;
+      }
+
       setActiveTab((prev) => {
         const currentIndex = productTabs.indexOf(prev);
         const nextIndex = (currentIndex + 1) % productTabs.length;
@@ -380,7 +384,7 @@ export default function LandingPage() {
               Engineered for High-Conversion Resumes
             </p>
             <p className="mx-auto mt-4 max-w-2xl text-slate-600">
-              Generic resumes fail ATS screenings. TailorCV uses schema-driven
+              Generic resumes fail ATS screenings. CVForbes uses schema-driven
               semantic mapping to match experience structure directly with
               specific target roles.
             </p>
@@ -469,7 +473,7 @@ export default function LandingPage() {
                       <span className="text-slate-500">
                         Schema Alignment Output
                       </span>
-                      <pre className="mt-2 text-[10px] leading-relaxed">
+                      <pre className="mt-2 text-[10px] leading-relaxed whitespace-pre-wrap break-words">
                         {`{
   "original_bullet": "Made dashboard components.",
   "target_keywords": ["Next.js", "Performance"],
@@ -505,7 +509,7 @@ export default function LandingPage() {
                       Instant Contextual Cover Letters
                     </h3>
                     <p className="mt-4 text-slate-600 leading-relaxed">
-                      Stop writing standard cover letters. TailorCV
+                      Stop writing standard cover letters. CVForbes
                       cross-references your core competencies with details about
                       the hiring manager, target team, and product offering to
                       draft short, high-impact introductory notes.
@@ -995,11 +999,11 @@ export default function LandingPage() {
               <Sparkles className="h-3 w-3" />
             </div>
             <span className="text-sm font-extrabold tracking-tight text-slate-900">
-              Tailor<span className="text-light-bronze font-black">CV</span>
+              CV<span className="text-light-bronze font-black">Forbes</span>
             </span>
           </div>
           <p className="text-xs text-slate-500">
-            &copy; {new Date().getFullYear()} TailorCV. Designed to increase
+            &copy; {new Date().getFullYear()} CVForbes. Designed to increase
             conversion. All rights reserved.
           </p>
         </div>
@@ -1042,7 +1046,7 @@ export default function LandingPage() {
 
                 {/* Simulated Web Application Demo Inside Video */}
                 <div className="w-full flex items-center justify-between border-b border-white/10 pb-3 text-[10px] text-slate-400 font-mono">
-                  <span>http://tailorcv.ai/demo-sandbox</span>
+                  <span>http://cvforbes.ai/demo-sandbox</span>
                   <span className="flex items-center gap-1.5">
                     <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />{" "}
                     Live Session

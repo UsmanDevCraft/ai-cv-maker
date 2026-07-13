@@ -16,7 +16,7 @@ const Navbar = () => {
               <Sparkles className="h-5 w-5" />
             </div>
             <span className="text-xl font-extrabold tracking-tight text-slate-900">
-              Tailor<span className="text-light-bronze font-black">CV</span>
+              CV<span className="text-light-bronze font-black">Forbes</span>
             </span>
           </Link>
 
