@@ -4,7 +4,7 @@
 
 CVForbes is a modern AI-powered web application that helps job seekers generate tailored resumes and personalized cover letters for specific job opportunities. Simply upload your existing resume, paste the target job description, and let AI optimize your application while preserving factual accuracy.
 
-<img width="1661" height="857" alt="Screenshot 2026-07-13 at 12 02 34 PM" src="https://github.com/user-attachments/assets/d139bb3f-556e-43e9-adb1-a323e421367d" />
+<img width="1658" height="802" alt="Screenshot 2026-07-13 at 12 39 33 PM" src="https://github.com/user-attachments/assets/58dcfca3-ed1c-49cf-9f1a-8a4e0ead3376" />
 
 This repository contains the **frontend** of CVForbes, built with **Next.js 16**, **React 19**, **TypeScript**, and **Tailwind CSS 4**, delivering a fast, responsive, and engaging user experience.
 
