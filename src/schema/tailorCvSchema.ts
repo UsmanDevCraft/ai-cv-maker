@@ -11,7 +11,7 @@ export const tailorCvSchema = z.object({
       .string()
       .trim()
       .min(10, "Job description must be at least 10 characters.")
-      .max(2500, "Job description cannot exceed 2500 characters."),
+      .max(3500, "Job description cannot exceed 3500 characters."),
   ),
 
   file: z

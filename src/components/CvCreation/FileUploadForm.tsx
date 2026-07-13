@@ -8,6 +8,7 @@ import { toFormikValidationSchema } from "zod-formik-adapter";
 import { useFormik } from "formik";
 import { tailorCvSchema } from "@/src/schema/tailorCvSchema";
 import { FormValues, initialValues } from "@/src/types/shared";
+import { useTailorCv } from "@/src/hooks/useCreateTailorCv";
 
 const FileUploadForm = ({
   setLoading,
@@ -16,6 +17,7 @@ const FileUploadForm = ({
   setLoading: (loading: boolean) => void;
   setResult: (result: FinalTailoredOutput) => void;
 }) => {
+  const { mutateAsync } = useTailorCv();
   const { showAlert } = useAlert();
   const [isDragging, setIsDragging] = useState(false);
 
@@ -71,22 +73,15 @@ const FileUploadForm = ({
     validationSchema: toFormikValidationSchema(tailorCvSchema),
 
     onSubmit: async (values, { resetForm }) => {
-      setLoading(true);
-
       const formData = new FormData();
 
       formData.append("cv_file", values.file!);
       formData.append("job_description", values.jobDesc);
 
+      setLoading(true);
+
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/tailor-cv", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!response.ok) throw new Error();
-
-        const data: FinalTailoredOutput = await response.json();
+        const data = await mutateAsync(formData);
 
         setResult(data);
 
@@ -97,11 +92,11 @@ const FileUploadForm = ({
         );
 
         resetForm();
-      } catch {
+      } catch (error) {
         showAlert(
           "error",
           "Generation Failed",
-          "An error occurred while compiling assets.",
+          error instanceof Error ? error.message : "Something went wrong.",
         );
       } finally {
         setLoading(false);
