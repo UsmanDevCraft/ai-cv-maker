@@ -142,7 +142,7 @@ export default function CvCreationPage() {
     const contactInfo = [
       result.cv.email,
       result.cv.phone,
-      ...(result.cv.links || []),
+      ...result.cv.links.map(({ text, url }) => text || url).filter(Boolean),
     ]
       .filter(Boolean)
       .join(" | ");
@@ -360,20 +360,85 @@ export default function CvCreationPage() {
                         </div>
 
                         {/* Optimised Skills */}
-                        <div className="bg-white/60 border border-white/50 p-5 rounded-2xl shadow-sm space-y-3">
-                          <span className="font-bold text-xs text-slate-400 uppercase tracking-wider block">
+                        <div className="bg-white/60 border border-white/50 p-5 rounded-2xl shadow-sm space-y-4">
+                          <span className="font-bold text-xs text-slate-400 uppercase tracking-wider block mb-2">
                             Extracted & Tailored Skill Tags
                           </span>
-                          <div className="flex flex-wrap gap-1.5">
-                            {result.cv.skills.map((skill, i) => (
-                              <span
-                                key={i}
-                                className="bg-white/80 border border-slate-200 text-slate-700 px-2.5 py-1 rounded-lg text-xs font-semibold hover:border-light-bronze/40 transition-colors shadow-sm"
-                              >
-                                {skill}
+                          {result.cv.skills && result.cv.skills.length > 0 && (
+                            <div className="space-y-1">
+                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                                Core Skills
                               </span>
-                            ))}
-                          </div>
+                              <div className="flex flex-wrap gap-1.5">
+                                {result.cv.skills.map((skill, i) => (
+                                  <span
+                                    key={i}
+                                    className="bg-white/80 border border-slate-200 text-slate-700 px-2 py-0.5 rounded-lg text-xs font-semibold hover:border-light-bronze/40 transition-colors shadow-sm"
+                                  >
+                                    {skill}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          {result.cv.technical_skills &&
+                            result.cv.technical_skills.length > 0 && (
+                              <div className="space-y-1">
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                                  Technical Skills
+                                </span>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {result.cv.technical_skills.map(
+                                    (skill, i) => (
+                                      <span
+                                        key={i}
+                                        className="bg-white/80 border border-slate-200 text-slate-700 px-2 py-0.5 rounded-lg text-xs font-semibold hover:border-light-bronze/40 transition-colors shadow-sm"
+                                      >
+                                        {skill}
+                                      </span>
+                                    ),
+                                  )}
+                                </div>
+                              </div>
+                            )}
+                          {result.cv.soft_skills &&
+                            result.cv.soft_skills.length > 0 && (
+                              <div className="space-y-1">
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                                  Soft Skills
+                                </span>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {result.cv.soft_skills.map((skill, i) => (
+                                    <span
+                                      key={i}
+                                      className="bg-white/80 border border-slate-200 text-slate-700 px-2 py-0.5 rounded-lg text-xs font-semibold hover:border-light-bronze/40 transition-colors shadow-sm"
+                                    >
+                                      {skill}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                          {result.cv.tools_and_technologies &&
+                            result.cv.tools_and_technologies.length > 0 && (
+                              <div className="space-y-1">
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
+                                  Tools & Technologies
+                                </span>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {result.cv.tools_and_technologies.map(
+                                    (skill, i) => (
+                                      <span
+                                        key={i}
+                                        className="bg-white/80 border border-slate-200 text-slate-700 px-2 py-0.5 rounded-lg text-xs font-semibold hover:border-light-bronze/40 transition-colors shadow-sm"
+                                      >
+                                        {skill}
+                                      </span>
+                                    ),
+                                  )}
+                                </div>
+                              </div>
+                            )}
                         </div>
 
                         {/* Experience timeline */}
