@@ -1,4 +1,11 @@
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  Link,
+} from "@react-pdf/renderer";
 import { CoverLetterDocumentProps } from "../../types/cv_template";
 
 const styles = StyleSheet.create({
@@ -28,6 +35,17 @@ const styles = StyleSheet.create({
     marginTop: 6,
     color: "#4a5568",
     fontSize: 9,
+  },
+  linkText: {
+    color: "#1e40af",
+    fontSize: 9,
+    textDecoration: "underline",
+  },
+  linksRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 4,
+    marginTop: 4,
   },
   date: {
     marginTop: 15,
@@ -68,14 +86,33 @@ export const CoverLetterDocument = ({
         <View style={styles.header}>
           <Text style={styles.name}>{cv.full_name}</Text>
           <View style={styles.subtitle}>
-            <Text>{cv.email}</Text>
+            <Link src={`mailto:${cv.email}`} style={styles.linkText}>
+              {cv.email}
+            </Link>
             {cv.phone && <Text>| {cv.phone}</Text>}
-            {cv.links?.map((link, idx) => (
-              <Text key={idx}>
-                | {typeof link === "string" ? link : link.url}
-              </Text>
-            ))}
           </View>
+          {cv.links && cv.links.length > 0 && (
+            <View style={styles.linksRow}>
+              {cv.links.map((link, idx) => {
+                const label = link.text || link.url || link.type;
+                const href = link.url;
+                return (
+                  <View key={idx} style={{ flexDirection: "row" }}>
+                    <Text style={{ fontSize: 9, color: "#4a5568" }}>| </Text>
+                    {href ? (
+                      <Link src={href} style={styles.linkText}>
+                        {label}
+                      </Link>
+                    ) : (
+                      <Text style={{ fontSize: 9, color: "#4a5568" }}>
+                        {label}
+                      </Text>
+                    )}
+                  </View>
+                );
+              })}
+            </View>
+          )}
         </View>
 
         {/* Date */}

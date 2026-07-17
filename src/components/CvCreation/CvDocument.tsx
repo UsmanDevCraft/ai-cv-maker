@@ -1,4 +1,11 @@
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  Link,
+} from "@react-pdf/renderer";
 import { TailoredCV } from "../../types/cv_template";
 
 // Create high-quality, professional document styles
@@ -128,11 +135,19 @@ export const CVDocument = ({ data }: { data: TailoredCV }) => (
         </View>
         {data.links && data.links.length > 0 && (
           <View style={styles.linksContainer}>
-            {data.links.map((link, idx) => (
-              <Text key={idx} style={styles.linkText}>
-                {link.text || link.url || link.type}
-              </Text>
-            ))}
+            {data.links.map((link, idx) => {
+              const label = link.text || link.url || link.type;
+              const href = link.url;
+              return href ? (
+                <Link key={idx} src={href} style={styles.linkText}>
+                  {label}
+                </Link>
+              ) : (
+                <Text key={idx} style={styles.linkText}>
+                  {label}
+                </Text>
+              );
+            })}
           </View>
         )}
       </View>
@@ -219,7 +234,9 @@ export const CVDocument = ({ data }: { data: TailoredCV }) => (
                 <Text style={styles.duration}>{proj.duration || ""}</Text>
               </View>
               {proj.link ? (
-                <Text style={styles.linkText}>{proj.link}</Text>
+                <Link src={proj.link} style={styles.linkText}>
+                  {proj.link}
+                </Link>
               ) : null}
               <Text style={styles.bulletText}>{proj.description}</Text>
               {proj.technologies && proj.technologies.length > 0 && (
@@ -290,7 +307,9 @@ export const CVDocument = ({ data }: { data: TailoredCV }) => (
               </View>
               <Text style={styles.role}>{pub.publisher}</Text>
               {pub.link ? (
-                <Text style={styles.linkText}>{pub.link}</Text>
+                <Link src={pub.link} style={styles.linkText}>
+                  {pub.link}
+                </Link>
               ) : null}
             </View>
           ))}

@@ -630,7 +630,7 @@ export default function CvCreationPage() {
                     />
                   </div>
 
-                  {/* Immediate Download CV Bar at Bottom */}
+                  {/* Immediate Download Bar at Bottom */}
                   {activePreviewTab === "cv" && (
                     <div className="mt-4">
                       <PDFDownloadLink
@@ -645,6 +645,31 @@ export default function CvCreationPage() {
                               {loading
                                 ? "Compiling PDF..."
                                 : "Download Tailored CV (PDF)"}
+                            </span>
+                          </>
+                        )}
+                      </PDFDownloadLink>
+                    </div>
+                  )}
+                  {activePreviewTab === "cl" && (
+                    <div className="mt-4">
+                      <PDFDownloadLink
+                        document={
+                          <CoverLetterDocument
+                            cv={result.cv}
+                            coverLetterText={result.cover_letter}
+                          />
+                        }
+                        fileName={`${result.cv.full_name.replace(/\s+/g, "_")}_Cover_Letter.pdf`}
+                        className="flex w-full items-center justify-center gap-2 bg-light-bronze hover:bg-light-bronze-hover text-white text-center text-sm font-bold py-3 px-4 rounded-xl shadow-md hover:shadow-lg transition-all active:scale-98"
+                      >
+                        {({ loading }) => (
+                          <>
+                            <Download className="h-4 w-4" />
+                            <span>
+                              {loading
+                                ? "Compiling PDF..."
+                                : "Download Cover Letter (PDF)"}
                             </span>
                           </>
                         )}
