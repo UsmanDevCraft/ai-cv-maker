@@ -76,9 +76,18 @@ export interface TailoredCV {
   languages: Language[];
 }
 
+export interface ResumeAnalytics {
+  ats_score: number;
+  resume_parse_rate: number;
+  keyword_match: number;
+  experience_relevance: number;
+  overall_job_match: number;
+}
+
 export interface FinalTailoredOutput {
   cv: TailoredCV;
   cover_letter: string;
+  analytics: ResumeAnalytics;
 }
 
 export interface CoverLetterDocumentProps {
