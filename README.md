@@ -6,7 +6,7 @@ CVForbes is a modern AI-powered web application that helps job seekers generate 
 
 <img width="1658" height="802" alt="Screenshot 2026-07-13 at 12 39 33 PM" src="https://github.com/user-attachments/assets/58dcfca3-ed1c-49cf-9f1a-8a4e0ead3376" />
 
-This repository contains the **frontend** of CVForbes, built with **Next.js 16**, **React 19**, **TypeScript**, and **Tailwind CSS 4**, delivering a fast, responsive, and engaging user experience.
+Built using Next.js, FastAPI, MongoDB, Clerk Authentication, and modern AI tooling, CVForbes demonstrates how production-grade AI applications can combine intelligent document generation with robust [Backend](https://github.com/UsmanDevCraft/cvforbes-backend) architecture, security, and operational visibility.
 
 ---
 
@@ -43,44 +43,32 @@ The entire workflow is designed to reduce the time spent tailoring applications 
 
 # 🎯 Key Features
 
-### 🤖 AI Resume Tailoring
-
-Transforms existing resume content into an ATS-friendly version while maintaining factual accuracy.
-
----
-
-### 📝 AI Cover Letter Generation
-
-Creates personalized cover letters aligned with the target role and company requirements.
-
----
-
-### 📊 ATS Optimization
-
-Improves keyword matching, bullet point structure, and overall readability for Applicant Tracking Systems.
+- 🤖 AI-powered resume tailoring for specific job descriptions
+- 📝 Personalized cover letter generation
+- 📈 ATS optimization and resume analytics
+- 🔀 Provider-agnostic LLM router (Groq, OpenRouter, Gemini, Ollama)
+- 🛡️ Anonymous usage tracking with daily generation limits
+- 🚦 Rate limiting and abuse protection
+- 🔐 Clerk authentication with role-based admin access
+- 📊 Admin dashboard with user, generation, and analytics endpoints
+- 📚 API versioning and standardized response models
+- 🗄️ MongoDB + Beanie with optimized indexing
+- 🧩 Clean Architecture (Middleware → Services → Repositories → Models)
+- 🚀 Production-ready FastAPI + Next.js application
 
 ---
 
-### 📄 PDF Resume Upload
+# 🏗 Architecture Highlights
 
-Simple drag-and-drop uploader supporting secure PDF processing.
-
----
-
-### ⚡ Real-Time Generation
-
-Uses asynchronous API communication for fast AI generation with loading states and smooth transitions.
-
----
-
-### 🎨 Modern User Experience
-
-* Responsive layout
-* Framer Motion animations
-* Interactive landing page
-* Smooth transitions
-* Professional UI components
-* Mobile-friendly design
+* Provider-agnostic LLM router with automatic failover
+* Clean Architecture (Middleware → Services → Repositories → Models)
+* FastAPI + MongoDB + Beanie backend
+* Next.js + React + TypeScript frontend
+* Clerk authentication with role-based authorization
+* Anonymous usage tracking and daily generation limits
+* Admin dashboard with analytics APIs
+* Structured AI output validation
+* Production-oriented security and scalability
 
 ---
 
@@ -91,6 +79,10 @@ Uses asynchronous API communication for fast AI generation with loading states a
 * Next.js 16
 * React 19
 * TypeScript
+
+### Auth
+
+* Clerk
 
 ### Styling
 
@@ -172,16 +164,34 @@ User Uploads Resume
 Paste Job Description
         │
         ▼
-Frontend Validation
+Frontend Validation (Zod)
         │
         ▼
-Secure API Request
+Authenticated Request (Clerk)
         │
         ▼
-FastAPI AI Backend
+FastAPI Backend
         │
         ▼
-Gemini AI Processing
+Anonymous Usage & Rate Limit Checks
+        │
+        ▼
+Secure PDF Processing
+        │
+        ▼
+Provider-Agnostic LLM Router
+        │
+        ▼
+Groq / OpenRouter / Ollama / Gemini
+        │
+        ▼
+Structured AI Validation
+        │
+        ▼
+Resume & Cover Letter Generation
+        │
+        ▼
+Generation Analytics Saved
         │
         ▼
 Structured JSON Response
@@ -190,17 +200,14 @@ Structured JSON Response
 Render Tailored Resume
         │
         ▼
-Display Cover Letter
-        │
-        ▼
-Export Assets
+Display Cover Letter & Analytics
 ```
 
 ---
 
 # 🧠 Frontend Architecture
 
-The application follows modern React best practices.
+The application follows modern React and Next.js best practices with a scalable, production-oriented architecture.
 
 ## State Management
 
@@ -210,30 +217,36 @@ The application follows modern React best practices.
 
 ## API Layer
 
-Dedicated service layer keeps networking separate from UI components.
+A dedicated service layer abstracts backend communication, request handling, error management, and API versioning from UI components.
 
 ## Validation
 
-All user input is validated using **Zod** before submission.
+Client-side validation is handled using **Zod** before requests are submitted. Final validation is always enforced by the backend.
+
+## Authentication
+
+Authentication is powered by **Clerk**, with role-based route protection for administrative functionality.
 
 ## Component Design
 
-Reusable components are designed to be composable and maintainable.
+Reusable, composable, and responsive components are organized for long-term maintainability and scalability.
 
 ---
 
 # 🔒 Security Considerations
 
-Although the primary security layer lives in the backend, the frontend also contributes by:
+Although the primary security layer resides in the backend, the frontend contributes by:
 
-* Validating form inputs before submission
+* Validating user input before submission
 * Restricting unsupported file formats
 * Enforcing upload size limits
 * Preventing invalid requests
+* Managing authenticated user sessions with Clerk
+* Restricting admin-only routes
 * Handling API failures gracefully
-* Displaying user-friendly error messages
+* Displaying user-friendly validation and error messages
 
-The backend performs the authoritative validation and security checks.
+The [Backend](https://github.com/UsmanDevCraft/cvforbes-backend) performs the authoritative security checks, including usage tracking, rate limiting, abuse protection, PDF validation, AI response validation, and access control.
 
 ---
 
@@ -306,17 +319,19 @@ http://localhost:3000
 
 # 🖥 Backend Dependency
 
-This frontend communicates with the **CVForbes Backend**, which provides:
+This frontend communicates with the [**CVForbes Backend**](https://github.com/UsmanDevCraft/cvforbes-backend), which provides:
 
-* Secure PDF processing
-* Resume parsing
+* Provider-agnostic LLM routing with automatic failover
+* Secure PDF processing and structured resume parsing
 * AI-powered resume tailoring
-* Cover letter generation
+* Personalized cover letter generation
+* ATS optimization and resume analytics
 * Structured JSON validation
-* Rate limiting
-* Prompt injection protection
-* File validation
-* Secure AI processing
+* Anonymous usage tracking and daily generation limits
+* Rate limiting and abuse protection
+* Clerk authentication and role-based authorization
+* Admin dashboard APIs (users, generations, bans, analytics)
+* File validation and secure AI processing
 
 Ensure the backend server is running before using the application.
 
@@ -324,24 +339,19 @@ Ensure the backend server is running before using the application.
 
 # 🌟 Current Capabilities
 
-✔ Upload PDF resumes
-
-✔ ATS resume rewriting
-
-✔ AI-generated cover letters
-
+✔ AI-powered resume tailoring
+✔ Personalized cover letter generation
+✔ ATS optimization with resume analytics
+✔ Provider-agnostic LLM router with automatic failover
+✔ Secure PDF upload and text extraction
+✔ Structured AI output validation
+✔ Anonymous usage tracking (5 successful CVs/day)
+✔ Rate limiting and abuse protection
+✔ Clerk authentication with role-based admin access
+✔ Admin dashboard (users, generations, bans, analytics)
 ✔ Responsive interface
-
-✔ Animated landing page
-
 ✔ Form validation
-
-✔ API integration
-
-✔ Loading states
-
-✔ Error handling
-
+✔ Loading & error states
 ✔ Professional UI/UX
 
 ---

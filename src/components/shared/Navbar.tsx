@@ -2,8 +2,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Menu } from "lucide-react";
+import { SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
+import { useIsAdmin } from "@/src/hooks/useIsAdmin";
 
 const Navbar = () => {
+  const { isAdmin } = useIsAdmin();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -46,16 +49,39 @@ const Navbar = () => {
             >
               Roadmap
             </a>
+            {isAdmin && (
+              <a
+                href="/dashboard"
+                className="text-sm font-semibold text-slate-600 transition-colors hover:text-light-bronze"
+              >
+                Dashboard
+              </a>
+            )}
           </nav>
 
-          {/* CTA Button */}
+          {/* Desktop Auth Controls */}
           <div className="hidden items-center gap-4 md:flex">
-            <Link
-              href="/makeyourcv"
-              className="inline-flex items-center justify-center rounded-xl bg-light-bronze px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-light-bronze/25 transition-all duration-300 hover:bg-light-bronze-hover hover:shadow-light-bronze/35 hover:-translate-y-0.5 active:translate-y-0"
-            >
-              Get Started
-            </Link>
+            <Show when="signed-out">
+              <SignInButton mode="modal">
+                <button className="text-sm font-semibold text-slate-700 hover:text-light-bronze transition-colors">
+                  Sign In
+                </button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <button className="inline-flex items-center justify-center rounded-xl bg-light-bronze px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-light-bronze/25 transition-all duration-300 hover:bg-light-bronze-hover hover:shadow-light-bronze/35 hover:-translate-y-0.5 active:translate-y-0">
+                  Sign Up
+                </button>
+              </SignUpButton>
+            </Show>
+            <Show when="signed-in">
+              <Link
+                href="/makeyourcv"
+                className="inline-flex items-center justify-center rounded-xl bg-light-bronze px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-light-bronze/25 transition-all duration-300 hover:bg-light-bronze-hover hover:shadow-light-bronze/35 hover:-translate-y-0.5 active:translate-y-0"
+              >
+                Get Started
+              </Link>
+              <UserButton showName={false} />
+            </Show>
           </div>
 
           {/* Mobile Menu Icon */}
@@ -106,12 +132,40 @@ const Navbar = () => {
                 >
                   Roadmap
                 </a>
-                <Link
-                  href="/makeyourcv"
-                  className="mt-2 inline-flex w-full items-center justify-center rounded-xl bg-light-bronze py-3 text-center text-sm font-bold text-white shadow-md shadow-light-bronze/20 hover:bg-light-bronze-hover"
-                >
-                  Get Started
-                </Link>
+                {isAdmin && (
+                  <a
+                    href="/dashboard"
+                    className="text-sm font-semibold text-slate-600 transition-colors hover:text-light-bronze"
+                  >
+                    Dashboard
+                  </a>
+                )}
+
+                <Show when="signed-out">
+                  <div className="flex flex-col gap-2 mt-2">
+                    <SignInButton mode="modal">
+                      <button className="w-full rounded-xl border border-slate-300 py-2.5 text-center text-sm font-bold text-slate-700 hover:bg-slate-50">
+                        Sign In
+                      </button>
+                    </SignInButton>
+                    <SignUpButton mode="modal">
+                      <button className="w-full rounded-xl bg-light-bronze py-2.5 text-center text-sm font-bold text-white shadow-md hover:bg-light-bronze-hover">
+                        Sign Up
+                      </button>
+                    </SignUpButton>
+                  </div>
+                </Show>
+                <Show when="signed-in">
+                  <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-200/50">
+                    <Link
+                      href="/makeyourcv"
+                      className="inline-flex items-center justify-center rounded-xl bg-light-bronze px-4 py-2.5 text-sm font-bold text-white shadow-md hover:bg-light-bronze-hover"
+                    >
+                      Get Started
+                    </Link>
+                    <UserButton showName />
+                  </div>
+                </Show>
               </div>
             </motion.div>
           )}

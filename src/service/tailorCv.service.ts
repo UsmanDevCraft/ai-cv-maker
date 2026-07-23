@@ -3,7 +3,7 @@ import { FinalTailoredOutput } from "../types/cv_template";
 
 export const tailorCv = (formData: FormData) =>
   fetcher<FinalTailoredOutput>({
-    endpoint: "/api/tailor-cv",
+    endpoint: "/api/v1/tailor-cv",
     method: "POST",
     body: formData,
   });

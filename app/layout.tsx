@@ -1,3 +1,4 @@
+import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { AlertProvider } from "@/src/context/AlertContext";
@@ -116,12 +117,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`h-full antialiased ${inter.variable}`}>
       <body className="min-h-full flex flex-col bg-cornsilk font-sans text-slate-800 selection:bg-tea-green">
-        <QueryProvider>
-          <AlertProvider>
-            {children}
-            <AlertContainer />
-          </AlertProvider>
-        </QueryProvider>
+        <ClerkProvider>
+          <QueryProvider>
+            <AlertProvider>
+              {children}
+              <AlertContainer />
+            </AlertProvider>
+          </QueryProvider>
+        </ClerkProvider>
       </body>
     </html>
   );
